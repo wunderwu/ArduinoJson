@@ -6,6 +6,7 @@ HEAD
 
 * Fixed `JsonBuffer::parse()` not respecting nesting limit correctly (issue #693)
 * Fixed inconsistencies in nesting level counting (PR #695 from Zhenyu Wu)
+* Added ARDUINOJSON_DOUBLE_IS_64BITS (issue #716)
 
 v5.13.1
 -------
