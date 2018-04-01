@@ -135,6 +135,16 @@
 #define ARDUINOJSON_ENABLE_DEPRECATED 1
 #endif
 
+// Enable support for 64-bit double precision floating point
+#ifndef ARDUINOJSON_DOUBLE_IS_64BITS
+#if (defined(__DOUBLE__) && __DOUBLE__ == 32) || \
+    (defined(__SIZEOF_DOUBLE__) && __SIZEOF_DOUBLE__ == 4)
+#define ARDUINOJSON_DOUBLE_IS_64BITS 0
+#else
+#define ARDUINOJSON_DOUBLE_IS_64BITS 1
+#endif
+#endif
+
 // Control the exponentiation threshold for big numbers
 // CAUTION: cannot be more that 1e9 !!!!
 #ifndef ARDUINOJSON_POSITIVE_EXPONENTIATION_THRESHOLD

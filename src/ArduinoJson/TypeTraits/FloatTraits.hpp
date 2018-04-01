@@ -15,6 +15,7 @@ namespace Internals {
 template <typename T, size_t = sizeof(T)>
 struct FloatTraits {};
 
+#if ARDUINOJSON_DOUBLE_IS_64BITS
 template <typename T>
 struct FloatTraits<T, 8 /*64bits*/> {
   typedef int64_t mantissa_type;
@@ -86,6 +87,7 @@ struct FloatTraits<T, 8 /*64bits*/> {
     return floatBits;
   }
 };
+#endif
 
 template <typename T>
 struct FloatTraits<T, 4 /*32bits*/> {
@@ -146,5 +148,5 @@ struct FloatTraits<T, 4 /*32bits*/> {
     return forge(0x7f800000);
   }
 };
-}
-}
+}  // namespace Internals
+}  // namespace ArduinoJson
