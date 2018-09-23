@@ -241,3 +241,42 @@ TEST_CASE("std::string") {
     REQUIRE(sizeBefore == sizeAfter);
   }
 }
+
+class NullString {};
+
+namespace ArduinoJson {
+namespace Internals {
+template <>
+struct StringTraits<NullString> {
+  typedef const char *duplicate_t;
+
+  template <typename Buffer>
+  static duplicate_t duplicate(const NullString &, Buffer *) {
+    return NULL;
+  }
+
+  static bool is_null(const NullString &) {
+    return true;
+  }
+
+  static const bool has_append = false;
+  static const bool has_equals = false;
+  static const bool should_duplicate = true;
+};
+}  // namespace Internals
+}  // namespace ArduinoJson
+
+TEST_CASE("A String that returns null") {
+  DynamicJsonBuffer jb;
+
+  SECTION("JsonBuffer_DontGrowWhenReusingKey") {
+    JsonObject &object = jb.createObject();
+    std::string key("hello");
+
+    object["hello"] = NullString();
+
+    std::string json;
+    object.printTo(json);
+    REQUIRE(json == "{\"hello\":null}");
+  }
+}
