@@ -41,7 +41,7 @@ void checkNumericType() {
 TEST_CASE("JsonVariant set()/get()") {
 #if ARDUINOJSON_USE_LONG_LONG || ARDUINOJSON_USE_INT64
   SECTION("SizeOfJsonInteger") {
-    REQUIRE(8 == sizeof(Internals::JsonInteger));
+    REQUIRE(8 == sizeof(JsonInteger));
   }
 #endif
 

@@ -6,8 +6,7 @@
 
 #include "../Configuration.hpp"
 
-namespace ArduinoJson {
-namespace Internals {
+namespace ARDUINOJSON_NAMESPACE {
 
 #if ARDUINOJSON_USE_LONG_LONG
 typedef long long JsonInteger;
@@ -19,5 +18,4 @@ typedef unsigned _int64 JsonUInt;
 typedef long JsonInteger;
 typedef unsigned long JsonUInt;
 #endif
-}
-}
+}  // namespace ARDUINOJSON_NAMESPACE

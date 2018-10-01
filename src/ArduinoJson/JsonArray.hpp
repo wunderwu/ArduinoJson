@@ -10,14 +10,12 @@
 // Returns the size (in bytes) of an array with n elements.
 // Can be very handy to determine the size of a StaticMemoryPool.
 #define JSON_ARRAY_SIZE(NUMBER_OF_ELEMENTS) \
-  ((NUMBER_OF_ELEMENTS) * sizeof(ArduinoJson::Internals::Slot))
+  ((NUMBER_OF_ELEMENTS) * sizeof(ARDUINOJSON_NAMESPACE::Slot))
 
-namespace ArduinoJson {
+namespace ARDUINOJSON_NAMESPACE {
 
 class JsonObject;
-namespace Internals {
 class JsonArraySubscript;
-}
 
 class JsonArray {
   friend class JsonVariant;
@@ -26,8 +24,7 @@ class JsonArray {
   typedef JsonArrayIterator iterator;
 
   FORCE_INLINE JsonArray() : _memoryPool(0), _data(0) {}
-  FORCE_INLINE JsonArray(Internals::MemoryPool* buf,
-                         Internals::JsonArrayData* arr)
+  FORCE_INLINE JsonArray(MemoryPool* buf, JsonArrayData* arr)
       : _memoryPool(buf), _data(arr) {}
 
   // Adds the specified value at the end of the array.
@@ -54,7 +51,7 @@ class JsonArray {
   JsonVariant add() {
     if (!_data) return JsonVariant();
 
-    Internals::Slot* slot = new (_memoryPool) Internals::Slot();
+    Slot* slot = new (_memoryPool) Slot();
     if (!slot) return JsonVariant();
 
     slot->next = 0;
@@ -146,10 +143,9 @@ class JsonArray {
   FORCE_INLINE JsonArray createNestedArray();
   FORCE_INLINE JsonObject createNestedObject();
 
-  FORCE_INLINE Internals::JsonArraySubscript operator[](size_t index);
+  FORCE_INLINE JsonArraySubscript operator[](size_t index);
 
-  FORCE_INLINE const Internals::JsonArraySubscript operator[](
-      size_t index) const;
+  FORCE_INLINE const JsonArraySubscript operator[](size_t index) const;
 
   FORCE_INLINE bool operator==(JsonArray rhs) const {
     iterator it1 = begin();
@@ -166,8 +162,7 @@ class JsonArray {
 
   // Gets the value at the specified index.
   template <typename T>
-  FORCE_INLINE typename Internals::JsonVariantAs<T>::type get(
-      size_t index) const {
+  FORCE_INLINE typename JsonVariantAs<T>::type get(size_t index) const {
     iterator it = begin() += index;
     return it != end() ? it->as<T>() : T();
   }
@@ -183,7 +178,7 @@ class JsonArray {
   FORCE_INLINE void remove(iterator it) {
     if (!_data) return;
 
-    Internals::Slot* slot = it.internal();
+    Slot* slot = it.internal();
     if (!slot) return;
 
     if (slot->prev)
@@ -230,7 +225,7 @@ class JsonArray {
 
   FORCE_INLINE size_t size() const {
     if (!_data) return 0;
-    Internals::Slot* slot = _data->head;
+    Slot* slot = _data->head;
     size_t n = 0;
     while (slot) {
       slot = slot->next;
@@ -264,7 +259,7 @@ class JsonArray {
     return add().set(value);
   }
 
-  Internals::MemoryPool* _memoryPool;
-  Internals::JsonArrayData* _data;
+  MemoryPool* _memoryPool;
+  JsonArrayData* _data;
 };
-}  // namespace ArduinoJson
+}  // namespace ARDUINOJSON_NAMESPACE

@@ -9,8 +9,7 @@
 #include "JsonVariantContent.hpp"
 #include "JsonVariantType.hpp"
 
-namespace ArduinoJson {
-namespace Internals {
+namespace ARDUINOJSON_NAMESPACE {
 
 struct JsonVariantData {
   JsonVariantType type;
@@ -157,5 +156,4 @@ struct JsonVariantData {
     return type == JSON_LINKED_STRING || type == JSON_OWNED_STRING;
   }
 };
-}  // namespace Internals
-}  // namespace ArduinoJson
+}  // namespace ARDUINOJSON_NAMESPACE

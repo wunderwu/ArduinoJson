@@ -5,8 +5,7 @@
 #pragma once
 
 #include "integral_constant.hpp"
-namespace ArduinoJson {
-namespace Internals {
+namespace ARDUINOJSON_NAMESPACE {
 
 template <typename>
 struct is_unsigned : false_type {};
@@ -34,5 +33,4 @@ struct is_unsigned<unsigned long long> : true_type {};
 template <>
 struct is_unsigned<unsigned __int64> : true_type {};
 #endif
-}  // namespace Internals
-}  // namespace ArduinoJson
+}  // namespace ARDUINOJSON_NAMESPACE

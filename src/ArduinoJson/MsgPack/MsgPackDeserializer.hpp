@@ -11,8 +11,7 @@
 #include "./endianess.hpp"
 #include "./ieee754.hpp"
 
-namespace ArduinoJson {
-namespace Internals {
+namespace ARDUINOJSON_NAMESPACE {
 
 template <typename TReader, typename TStringStorage>
 class MsgPackDeserializer {
@@ -298,30 +297,25 @@ class MsgPackDeserializer {
   TStringStorage _stringStorage;
   uint8_t _nestingLimit;
 };
-}  // namespace Internals
 
 template <typename TDocument, typename TInput>
 DeserializationError deserializeMsgPack(TDocument &doc, const TInput &input) {
-  using namespace Internals;
   return deserialize<MsgPackDeserializer>(doc, input);
 }
 
 template <typename TDocument, typename TInput>
 DeserializationError deserializeMsgPack(TDocument &doc, TInput *input) {
-  using namespace Internals;
   return deserialize<MsgPackDeserializer>(doc, input);
 }
 
 template <typename TDocument, typename TInput>
 DeserializationError deserializeMsgPack(TDocument &doc, TInput *input,
                                         size_t inputSize) {
-  using namespace Internals;
   return deserialize<MsgPackDeserializer>(doc, input, inputSize);
 }
 
 template <typename TDocument, typename TInput>
 DeserializationError deserializeMsgPack(TDocument &doc, TInput &input) {
-  using namespace Internals;
   return deserialize<MsgPackDeserializer>(doc, input);
 }
-}  // namespace ArduinoJson
+}  // namespace ARDUINOJSON_NAMESPACE

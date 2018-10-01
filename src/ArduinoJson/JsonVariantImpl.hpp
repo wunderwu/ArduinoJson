@@ -11,13 +11,13 @@
 
 #include <string.h>  // for strcmp
 
-namespace ArduinoJson {
+namespace ARDUINOJSON_NAMESPACE {
 
 inline bool JsonVariant::set(JsonArray array) {
   return to<JsonArray>().copyFrom(array);
 }
 
-inline bool JsonVariant::set(const Internals::JsonArraySubscript& value) {
+inline bool JsonVariant::set(const JsonArraySubscript& value) {
   return set(value.as<JsonVariant>());
 }
 
@@ -26,8 +26,7 @@ inline bool JsonVariant::set(JsonObject object) {
 }
 
 template <typename TString>
-inline bool JsonVariant::set(
-    const Internals::JsonObjectSubscript<TString>& value) {
+inline bool JsonVariant::set(const JsonObjectSubscript<TString>& value) {
   return set(value.template as<JsonVariant>());
 }
 
@@ -38,13 +37,13 @@ inline bool JsonVariant::set(const JsonVariant& value) {
     return true;
   }
   switch (value._data->type) {
-    case Internals::JSON_ARRAY:
+    case JSON_ARRAY:
       return set(value.as<JsonArray>());
-    case Internals::JSON_OBJECT:
+    case JSON_OBJECT:
       return set(value.as<JsonObject>());
-    case Internals::JSON_OWNED_STRING:
+    case JSON_OWNED_STRING:
       return set(const_cast<char*>(value._data->content.asString));
-    case Internals::JSON_OWNED_RAW:
+    case JSON_OWNED_RAW:
       return set(serialized(const_cast<char*>(value._data->content.asRaw.data),
                             value._data->content.asRaw.size));
     default:
@@ -54,42 +53,35 @@ inline bool JsonVariant::set(const JsonVariant& value) {
 }
 
 template <typename T>
-inline typename Internals::enable_if<
-    Internals::is_same<typename Internals::remove_const<T>::type,
-                       JsonArray>::value,
-    JsonArray>::type
+inline typename enable_if<
+    is_same<typename remove_const<T>::type, JsonArray>::value, JsonArray>::type
 JsonVariant::as() const {
   return _data ? JsonArray(_memoryPool, _data->asArray()) : JsonArray();
 }
 
 template <typename T>
-inline typename Internals::enable_if<
-    Internals::is_same<typename Internals::remove_const<T>::type,
-                       JsonObject>::value,
-    T>::type
+inline typename enable_if<
+    is_same<typename remove_const<T>::type, JsonObject>::value, T>::type
 JsonVariant::as() const {
   return _data ? JsonObject(_memoryPool, _data->asObject()) : JsonObject();
 }
 
 template <typename T>
-inline typename Internals::enable_if<Internals::is_same<T, JsonArray>::value,
-                                     JsonArray>::type
+inline typename enable_if<is_same<T, JsonArray>::value, JsonArray>::type
 JsonVariant::to() {
   if (!_data) return JsonArray();
   return JsonArray(_memoryPool, _data->toArray());
 }
 
 template <typename T>
-typename Internals::enable_if<Internals::is_same<T, JsonObject>::value,
-                              JsonObject>::type
+typename enable_if<is_same<T, JsonObject>::value, JsonObject>::type
 JsonVariant::to() {
   if (!_data) return JsonObject();
   return JsonObject(_memoryPool, _data->toObject());
 }
 
 template <typename T>
-typename Internals::enable_if<Internals::is_same<T, JsonVariant>::value,
-                              JsonVariant>::type
+typename enable_if<is_same<T, JsonVariant>::value, JsonVariant>::type
 JsonVariant::to() {
   if (!_data) return JsonVariant();
   _data->setNull();
@@ -98,7 +90,6 @@ JsonVariant::to() {
 
 template <typename Visitor>
 inline void JsonVariant::accept(Visitor& visitor) const {
-  using namespace Internals;
   if (!_data) return visitor.visitNull();
 
   switch (_data->type) {
@@ -135,4 +126,4 @@ inline void JsonVariant::accept(Visitor& visitor) const {
       return visitor.visitNull();
   }
 }
-}  // namespace ArduinoJson
+}  // namespace ARDUINOJSON_NAMESPACE

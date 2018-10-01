@@ -7,8 +7,7 @@
 #include "../../Configuration.hpp"
 #include "is_same.hpp"
 
-namespace ArduinoJson {
-namespace Internals {
+namespace ARDUINOJSON_NAMESPACE {
 
 // A meta-function that returns true if T is an integral type.
 template <typename T>
@@ -32,5 +31,4 @@ struct is_integral {
 
 template <typename T>
 struct is_integral<const T> : is_integral<T> {};
-}  // namespace Internals
-}  // namespace ArduinoJson
+}  // namespace ARDUINOJSON_NAMESPACE

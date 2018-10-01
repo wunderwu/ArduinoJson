@@ -24,3 +24,13 @@
 #include "ArduinoJson/Json/PrettyJsonSerializer.hpp"
 #include "ArduinoJson/MsgPack/MsgPackDeserializer.hpp"
 #include "ArduinoJson/MsgPack/MsgPackSerializer.hpp"
+
+namespace ArduinoJson {
+using ARDUINOJSON_NAMESPACE::DeserializationError;
+using ARDUINOJSON_NAMESPACE::DynamicJsonDocument;
+using ARDUINOJSON_NAMESPACE::JsonArray;
+using ARDUINOJSON_NAMESPACE::JsonObject;
+using ARDUINOJSON_NAMESPACE::JsonVariant;
+using ARDUINOJSON_NAMESPACE::serialized;
+using ARDUINOJSON_NAMESPACE::StaticJsonDocument;
+}  // namespace ArduinoJson

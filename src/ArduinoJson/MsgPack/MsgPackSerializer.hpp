@@ -10,8 +10,7 @@
 #include "../Serialization/serialize.hpp"
 #include "./endianess.hpp"
 
-namespace ArduinoJson {
-namespace Internals {
+namespace ARDUINOJSON_NAMESPACE {
 
 template <typename TWriter>
 class MsgPackSerializer {
@@ -166,25 +165,21 @@ class MsgPackSerializer {
   TWriter* _writer;
   size_t _bytesWritten;
 };
-}  // namespace Internals
 
 template <typename TSource, typename TDestination>
 inline size_t serializeMsgPack(const TSource& source, TDestination& output) {
-  using namespace Internals;
   return serialize<MsgPackSerializer>(source, output);
 }
 
 template <typename TSource, typename TDestination>
 inline size_t serializeMsgPack(const TSource& source, TDestination* output,
                                size_t size) {
-  using namespace Internals;
   return serialize<MsgPackSerializer>(source, output, size);
 }
 
 template <typename TSource>
 inline size_t measureMsgPack(const TSource& source) {
-  using namespace Internals;
   return measure<MsgPackSerializer>(source);
 }
 
-}  // namespace ArduinoJson
+}  // namespace ARDUINOJSON_NAMESPACE
