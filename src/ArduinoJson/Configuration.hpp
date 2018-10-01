@@ -4,6 +4,8 @@
 
 #pragma once
 
+#include "version.hpp"
+
 // Small or big machine?
 #ifndef ARDUINOJSON_EMBEDDED_MODE
 #if defined(ARDUINO) || defined(__IAR_SYSTEMS_ICC__) || defined(__XC) || \

@@ -4,7 +4,7 @@
 
 #pragma once
 
-#include "ArduinoJson/version.hpp"
+#include "ArduinoJson/namespace.hpp"
 
 #include "ArduinoJson/DynamicJsonDocument.hpp"
 #include "ArduinoJson/StaticJsonDocument.hpp"
