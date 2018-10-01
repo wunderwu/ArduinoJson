@@ -33,7 +33,7 @@ inline bool JsonVariant::set(const JsonObjectSubscript<TString>& value) {
 inline bool JsonVariant::set(const JsonVariant& value) {
   if (!_data) return false;
   if (!value._data) {
-    _data->setNull();
+    _data->type = JSON_NULL;
     return true;
   }
   switch (value._data->type) {
@@ -56,35 +56,47 @@ template <typename T>
 inline typename enable_if<
     is_same<typename remove_const<T>::type, JsonArray>::value, JsonArray>::type
 JsonVariant::as() const {
-  return _data ? JsonArray(_memoryPool, _data->asArray()) : JsonArray();
+  if (_data && _data->type == JSON_ARRAY)
+    return JsonArray(_memoryPool, &_data->content.asArray);
+  else
+    return JsonArray();
 }
 
 template <typename T>
 inline typename enable_if<
     is_same<typename remove_const<T>::type, JsonObject>::value, T>::type
 JsonVariant::as() const {
-  return _data ? JsonObject(_memoryPool, _data->asObject()) : JsonObject();
+  if (_data && _data->type == JSON_OBJECT)
+    return JsonObject(_memoryPool, &_data->content.asObject);
+  else
+    return JsonObject();
 }
 
 template <typename T>
 inline typename enable_if<is_same<T, JsonArray>::value, JsonArray>::type
 JsonVariant::to() {
   if (!_data) return JsonArray();
-  return JsonArray(_memoryPool, _data->toArray());
+  _data->type = JSON_ARRAY;
+  _data->content.asArray.head = 0;
+  _data->content.asArray.tail = 0;
+  return JsonArray(_memoryPool, &_data->content.asArray);
 }
 
 template <typename T>
 typename enable_if<is_same<T, JsonObject>::value, JsonObject>::type
 JsonVariant::to() {
   if (!_data) return JsonObject();
-  return JsonObject(_memoryPool, _data->toObject());
+  _data->type = JSON_OBJECT;
+  _data->content.asObject.head = 0;
+  _data->content.asObject.tail = 0;
+  return JsonObject(_memoryPool, &_data->content.asObject);
 }
 
 template <typename T>
 typename enable_if<is_same<T, JsonVariant>::value, JsonVariant>::type
 JsonVariant::to() {
   if (!_data) return JsonVariant();
-  _data->setNull();
+  _data->type = JSON_NULL;
   return *this;
 }
 

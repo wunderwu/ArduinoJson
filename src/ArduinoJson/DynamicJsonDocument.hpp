@@ -37,7 +37,7 @@ class DynamicJsonDocument {
 
   void clear() {
     _memoryPool.clear();
-    _rootData.setNull();
+    _rootData.type = JSON_NULL;
   }
 
   size_t memoryUsage() const {

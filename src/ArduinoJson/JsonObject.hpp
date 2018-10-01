@@ -23,6 +23,10 @@ class JsonObject {
   FORCE_INLINE JsonObject(MemoryPool* buf, JsonObjectData* object)
       : _memoryPool(buf), _data(object) {}
 
+  operator JsonVariant() {
+    return JsonVariant(_memoryPool, getVariantData(_data));
+  }
+
   FORCE_INLINE iterator begin() const {
     if (!_data) return iterator();
     return iterator(_memoryPool, _data->head);
@@ -378,5 +382,5 @@ class JsonObject {
 
   mutable MemoryPool* _memoryPool;
   mutable JsonObjectData* _data;
-};  // namespace ArduinoJson
+};  // namespace ARDUINOJSON_NAMESPACE
 }  // namespace ARDUINOJSON_NAMESPACE

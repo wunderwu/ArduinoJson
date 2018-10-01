@@ -24,8 +24,12 @@ class JsonArray {
   typedef JsonArrayIterator iterator;
 
   FORCE_INLINE JsonArray() : _memoryPool(0), _data(0) {}
-  FORCE_INLINE JsonArray(MemoryPool* buf, JsonArrayData* arr)
-      : _memoryPool(buf), _data(arr) {}
+  FORCE_INLINE JsonArray(MemoryPool* pool, JsonArrayData* arr)
+      : _memoryPool(pool), _data(arr) {}
+
+  operator JsonVariant() {
+    return JsonVariant(_memoryPool, getVariantData(_data));
+  }
 
   // Adds the specified value at the end of the array.
   //
