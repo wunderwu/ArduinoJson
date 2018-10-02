@@ -4,8 +4,9 @@
 
 #pragma once
 
-#include "Configuration.hpp"
 #include "version.hpp"
+
+#include "Configuration.hpp"
 
 #define ARDUINOJSON_DO_CONCAT(A, B) A##B
 #define ARDUINOJSON_CONCAT2(A, B) ARDUINOJSON_DO_CONCAT(A, B)
