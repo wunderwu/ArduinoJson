@@ -29,7 +29,10 @@ namespace ArduinoJson {
 using ARDUINOJSON_NAMESPACE::DeserializationError;
 using ARDUINOJSON_NAMESPACE::DynamicJsonDocument;
 using ARDUINOJSON_NAMESPACE::JsonArray;
+using ARDUINOJSON_NAMESPACE::JsonFloat;
+using ARDUINOJSON_NAMESPACE::JsonInteger;
 using ARDUINOJSON_NAMESPACE::JsonObject;
+using ARDUINOJSON_NAMESPACE::JsonUInt;
 using ARDUINOJSON_NAMESPACE::JsonVariant;
 using ARDUINOJSON_NAMESPACE::serialized;
 using ARDUINOJSON_NAMESPACE::StaticJsonDocument;
